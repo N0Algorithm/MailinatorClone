@@ -1,27 +1,52 @@
-<!DOCTYPE html>
-<html>
-  
-<head>
-    <title>
-       setInterval() method
-    </title>
-</head>
-  
-<body>
-  
-    <button onclick="setInterval(demo, 5000);">
-      Click here
-    </button>
-  
-    <script>
-        function demo() {
-            const i=1
-            const a=2
-            document.write("I=",i+1);
-            document.write("A=",a+1);
+import React, { useState } from 'react';
+
+export default function Home() {
+  const [gradient, setGradient] = useState('');
+
+  const generateRandomGradient = () => {
+    const numColors = 3; // Number of colors in the gradient
+    const colors = Array.from({ length: numColors }, generateRandomColor);
+    const direction = Math.floor(Math.random() * 360); // Random gradient direction (0-359 degrees)
+    const gradient = `linear-gradient(${direction}deg, ${colors.join(', ')})`;
+    setGradient(gradient);
+  };
+
+  const generateRandomColor = () => {
+    // Generate random color component (0-255)
+    const colorComponent = () => Math.floor(Math.random() * 256);
+    // Create random color in hexadecimal format
+    return '#' + colorComponent().toString(16).padStart(2, '0') +
+                 colorComponent().toString(16).padStart(2, '0') +
+                 colorComponent().toString(16).padStart(2, '0');
+  };
+
+  return (
+    <div className="container" style={{ background: gradient }}>
+      <button onClick={generateRandomGradient}>Generate Gradient</button>
+
+      <style jsx>{`
+        .container {
+          height: 100vh;
+          display: flex;
+          justify-content: center;
+          align-items: center;
         }
-    </script>
-  
-</body>
-  
-</html>
+
+        button {
+          padding: 10px 20px;
+          font-size: 16px;
+          cursor: pointer;
+          background-color: #007bff;
+          border: none;
+          color: #ffffff;
+          border-radius: 5px;
+          transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+          background-color: #0056b3;
+        }
+      `}</style>
+    </div>
+  );
+}
